@@ -1,42 +1,64 @@
 "use strict";
 
 (function (w) {
-    const bishDivider = 3;
-    const boshDivider = 4;
-    const maxValue = 100;
-
-    const bish_boshEnum = {
-        bish: { value: bishDivider, text: "Bish" },
-        bosh: { value: boshDivider, text: "Bosh" }
+    
+    const BishBoshEnum = {
+        Bish: "Bish",
+        Bosh: "Bosh"
     }
 
-    function bish_bosh(number) {
-        let result = [];
-        const bish = (number % bish_boshEnum.bish.value) === 0;
-        const bosh = (number % bish_boshEnum.bosh.value) === 0;
+    class BishBosh {
+        #bishDivider;
+        #boshDivider;
+        #maxValue;
 
-        if (!(bish || bosh))
-            result.push(number);
-        else {
-            if (bish)
-                result.push(bish_boshEnum.bish.text);
-            if (bosh)
-                result.push(bish_boshEnum.bosh.text);
+        constructor(bishDivider, boshDivider, maxValue) {
+            this.#bishDivider = bishDivider;
+            this.#boshDivider = boshDivider;
+            this.#maxValue = maxValue;
         }
 
-        return result.join('_');
-    }
+        #evaluate(number) {
+            let result = [];
+            const bish = (number % this.#bishDivider) === 0;
+            const bosh = (number % this.#boshDivider) === 0;
 
+            if (!(bish || bosh))
+                result.push(number);
+            else {
+                if (bish)
+                    result.push(BishBoshEnum.Bish);
+                if (bosh)
+                    result.push(BishBoshEnum.Bosh);
+            }
+
+            return result.join('_');
+        }
+
+        #evaluateArray() {
+            let resultArray = [];
+            for (let index = 1; index < this.#maxValue; index++) {
+                resultArray.push(this.#evaluate(index));
+            }
+            return resultArray;
+        }
+
+        Print = ()=> this.#evaluateArray().join(', ');
+            
+    }
 
     function run() {
-        let resultArray = [];
-        for (let index = 1; index < maxValue; index++) {
-            resultArray.push(bish_bosh(index));
-        }
-        const result = resultArray.join(', ');
-        return (result);
+        const bishDivider = 3;
+        const boshDivider = 4;
+        const maxValue = 100;
+
+        const bishBosh = new BishBosh(bishDivider, boshDivider, maxValue)
+
+        console.log(bishBosh.Print());
+
     }
 
-    console.log(run());
+    run();
 
 })(window.bish_bosh = window.bish_bosh || {});
+
