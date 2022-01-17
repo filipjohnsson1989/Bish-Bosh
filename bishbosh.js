@@ -37,7 +37,7 @@
 
         #evaluateArray() {
             let resultArray = [];
-            for (let index = 1; index < this.#maxValue; index++) {
+            for (let index = 1; index <= this.#maxValue; index++) {
                 resultArray.push(this.#evaluate(index));
             }
             return resultArray;
@@ -67,12 +67,18 @@
             input.classList.add('text-light');
 
             input.nextElementSibling.innerText='';
+
+            setTimeout(
+                function() {
+                    input.classList.remove('bg-success');
+                    input.classList.remove('text-light');
+                }, 1000);
         }
 
     }
 
     const validateNumber = (input) => {
-        if (Number.parseInt(input.value) <= Number.parseInt(input.min)) {
+        if (Number.parseInt(input.value) < Number.parseInt(input.min)) {
             setError(input, `Värdet får inte vara mindre än ${input.min}.`);
             return false;
         } else {
